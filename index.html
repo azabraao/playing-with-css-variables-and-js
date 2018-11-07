@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        :root{
+            --background: #06bb55;
+            --spacing: 20px;
+            --blur: 0px;
+        }
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            text-align: center;
+        }
+        img{
+            width: 300px;
+            display: block;
+            filter: blur(var(--blur,0px));
+        }
+        #image-holder{
+            background-color: var(--background,#5ffff5); 
+            display: inline-block;
+            border: 1px solid;
+            padding: var(--spacing,10px);
+        }
+        .controlers,.header{
+            padding: 2em 0em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Update CSS Variables with JS</h1>
+    </div>
+    <div class="controlers">
+        <label for="spacing">Spacing</label>
+        <input type="range" id="spacing" min="0" max="25" value="10" data-sizing="px">
+        <label for="blur">Blur</label>
+        <input type="range" id="blur" value="0">
+        <label for="color">Color</label>
+        <input type="color" id="color">
+    </div>
+    <div id="image-holder">
+        <img id="image" src="https://unsplash.it/2018">
+    </div>
+    <script>
+        var spacing = document.getElementById('spacing');
+        var blur = document.getElementById('blur');
+        var color = document.getElementById('color');
+        var imgHolder = document.getElementById('image-holder');
+        var img = document.getElementById('image');
+        var cssVar = getComputedStyle(document.body); 
+
+        spacing.addEventListener('change',function(){
+            // imgHolder.style.padding = this.value+"px";
+            document.documentElement.style.setProperty('--spacing',this.value+"px");
+        });
+        blur.addEventListener('change',function(){
+            // img.style.filter = 'blur('+this.value+'px)';
+            document.documentElement.style.setProperty('--blur',this.value+"px");
+        });
+        color.addEventListener('change',function(){
+            document.documentElement.style.setProperty('--background', this.value);
+        });
+    </script>
+</body>
+</html>
