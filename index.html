@@ -7,8 +7,8 @@
     <title>Document</title>
     <style>
         :root{
-            --background: #06bb55;
-            --spacing: 20px;
+            --color: #06bb55;
+            --spacing: 10px;
             --blur: 0px;
         }
         *{
@@ -25,7 +25,7 @@
             filter: blur(var(--blur,0px));
         }
         #image-holder{
-            background-color: var(--background,#5ffff5); 
+            background-color: var(--color,#5ffff5); 
             display: inline-block;
             border: 1px solid;
             padding: var(--spacing,10px);
@@ -41,34 +41,28 @@
     </div>
     <div class="controlers">
         <label for="spacing">Spacing</label>
-        <input type="range" id="spacing" min="0" max="25" value="10" data-sizing="px">
+        <input class="control" type="range" name="spacing" min="0" max="25" value="10" data-sizing="px">
+        
         <label for="blur">Blur</label>
-        <input type="range" id="blur" value="0">
+        <input class="control" type="range" name="blur" value="0" data-sizing="px">
+        
         <label for="color">Color</label>
-        <input type="color" id="color">
+        <input class="control" type="color" name="color">
     </div>
     <div id="image-holder">
         <img id="image" src="https://unsplash.it/2018">
     </div>
     <script>
-        var spacing = document.getElementById('spacing');
-        var blur = document.getElementById('blur');
-        var color = document.getElementById('color');
-        var imgHolder = document.getElementById('image-holder');
-        var img = document.getElementById('image');
-        var cssVar = getComputedStyle(document.body); 
+   
+        const inputs = document.querySelectorAll('.control');
+        const handleChange = function(){
+            const suffix = this.dataset.sizing || '';
+            document.documentElement.style.setProperty(`--${this.name}`,this.value + suffix);
+        }
 
-        spacing.addEventListener('change',function(){
-            // imgHolder.style.padding = this.value+"px";
-            document.documentElement.style.setProperty('--spacing',this.value+"px");
-        });
-        blur.addEventListener('change',function(){
-            // img.style.filter = 'blur('+this.value+'px)';
-            document.documentElement.style.setProperty('--blur',this.value+"px");
-        });
-        color.addEventListener('change',function(){
-            document.documentElement.style.setProperty('--background', this.value);
-        });
+        inputs.forEach(input => input.addEventListener('change',handleChange));
+        inputs.forEach(input => input.addEventListener('mousemove',handleChange));
+
     </script>
 </body>
 </html>
